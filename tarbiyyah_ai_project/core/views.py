@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm
+from .models import ChatMessage
 import os
 import openai
 
@@ -8,7 +9,10 @@ openai.api_key = os.getenv('OPENAI_API_KEY', '')
 
 
 def index(request):
-    return render(request, 'index.html')
+    messages = None
+    if request.user.is_authenticated:
+        messages = ChatMessage.objects.filter(user=request.user).order_by('-created')[:20]
+    return render(request, 'index.html', {'messages': messages})
 
 
 def about(request):
@@ -40,5 +44,7 @@ def chat(request):
                 reply = f"Error: {e}"
         else:
             reply = "OPENAI_API_KEY not configured."
+        ChatMessage.objects.create(user=request.user if request.user.is_authenticated else None,
+                                  message=user_message, reply=reply)
         return JsonResponse({"reply": reply})
     return JsonResponse({"error": "Invalid request"}, status=400)

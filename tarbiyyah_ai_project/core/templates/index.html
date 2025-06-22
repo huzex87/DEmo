@@ -4,6 +4,19 @@
 
 {% block content %}
 <h1 class="mb-4">Welcome to Tarbiyyah AI</h1>
+{% if messages %}
+<div class="mb-3">
+  <h5>Your Recent Messages</h5>
+  <ul class="list-group">
+    {% for msg in messages %}
+      <li class="list-group-item">
+        <strong>You:</strong> {{ msg.message }}<br>
+        <strong>AI:</strong> {{ msg.reply }}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 <form id="chat-form" method="post" class="input-group mb-3">
     {% csrf_token %}
     <input type="text" name="message" id="message" class="form-control" placeholder="Ask a question" required>
