@@ -3,13 +3,13 @@
 {% block title %}Home - Tarbiyyah AI{% endblock %}
 
 {% block content %}
-<h1>Welcome to Tarbiyyah AI</h1>
-<form id="chat-form" method="post">
+<h1 class="mb-4">Welcome to Tarbiyyah AI</h1>
+<form id="chat-form" method="post" class="input-group mb-3">
     {% csrf_token %}
-    <input type="text" name="message" id="message" placeholder="Ask a question" required/>
-    <button type="submit">Send</button>
+    <input type="text" name="message" id="message" class="form-control" placeholder="Ask a question" required>
+    <button class="btn btn-primary" type="submit">Send</button>
 </form>
-<pre id="response"></pre>
+<pre id="response" class="bg-light p-3 rounded"></pre>
 <script>
     document.getElementById('chat-form').addEventListener('submit', async (e) => {
         e.preventDefault();
