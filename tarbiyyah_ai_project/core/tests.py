@@ -15,6 +15,14 @@ class BasicPagesTest(TestCase):
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
 
+    def test_curriculum_loads(self):
+        response = self.client.get(reverse('curriculum'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_dashboard_requires_login(self):
+        response = self.client.get(reverse('dashboard'))
+        self.assertEqual(response.status_code, 302)
+
 
 class ChatMessageTest(TestCase):
     def setUp(self):

@@ -21,8 +21,9 @@ python manage.py runserver 0.0.0.0:8000
 ```
 
 4. Open `http://localhost:8000/` in your browser.
-   - The navigation bar includes **Sign Up** and **Login** links that open their forms in pop-up modals.
-   - After creating an account and logging in you can ask questions on the home page.
-   - Your recent chat messages and AI replies are saved in the database and displayed when you're logged in.
+   - Use the **Curriculum** link to view a list of upcoming learning modules.
+   - After logging in you can access your personal **Dashboard** to see recent messages and update your goals.
+   - The navigation bar still provides **Sign Up** and **Login** modals for easy authentication.
+   - All chat messages are stored in the database and shown on your dashboard and the home page when logged in.
 
-Set the environment variable `OPENAI_API_KEY` to enable AI responses.
+Set the environment variable `OPENAI_API_KEY` to enable AI responses. Never commit your key to the repository—use environment variables instead.

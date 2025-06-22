@@ -10,3 +10,12 @@ class ChatMessage(models.Model):
 
     def __str__(self):
         return f"{self.user}: {self.message[:50]}"
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    level = models.CharField(max_length=100, blank=True)
+    goals = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"Profile of {self.user.username}"

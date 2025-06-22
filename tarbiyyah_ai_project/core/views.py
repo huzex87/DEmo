@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm
-from .models import ChatMessage
+from .models import ChatMessage, UserProfile
+from django.contrib.auth.decorators import login_required
 import os
 import openai
 
@@ -28,6 +29,17 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
+@login_required
+def dashboard(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    messages = ChatMessage.objects.filter(user=request.user).order_by('-created')[:5]
+    return render(request, 'dashboard.html', {"profile": profile, "messages": messages})
+
+
+def curriculum(request):
+    return render(request, 'curriculum.html')
 
 
 def chat(request):
