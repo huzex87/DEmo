@@ -21,5 +21,6 @@ python manage.py runserver 0.0.0.0:8000
 ```
 
 4. Open `http://localhost:8000/` in your browser.
+   - Use **Sign Up** to create an account and **Login** to access the chat feature.
 
 Set the environment variable `OPENAI_API_KEY` to enable AI responses.

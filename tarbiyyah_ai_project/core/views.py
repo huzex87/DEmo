@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.contrib.auth.forms import UserCreationForm
 import os
 import openai
 
@@ -8,6 +9,21 @@ openai.api_key = os.getenv('OPENAI_API_KEY', '')
 
 def index(request):
     return render(request, 'index.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 def chat(request):
