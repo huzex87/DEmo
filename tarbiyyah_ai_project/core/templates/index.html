@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Tarbiyyah AI{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Welcome to Tarbiyyah AI</h1>
+{% if messages %}
+<div class="mb-3">
+  <h5>Your Recent Messages</h5>
+  <ul class="list-group">
+    {% for msg in messages %}
+      <li class="list-group-item">
+        <strong>You:</strong> {{ msg.message }}<br>
+        <strong>AI:</strong> {{ msg.reply }}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<form id="chat-form" method="post" class="input-group mb-3">
+    {% csrf_token %}
+    <input type="text" name="message" id="message" class="form-control" placeholder="Ask a question" required>
+    <button class="btn btn-primary" type="submit">Send</button>
+</form>
+<pre id="response" class="bg-light p-3 rounded"></pre>
+<script>
+    document.getElementById('chat-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = document.getElementById('message').value;
+        const response = await fetch('chat/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ message })
+        });
+        const data = await response.json();
+        document.getElementById('response').textContent = data.reply || data.error;
+    });
+</script>
+{% endblock %}
